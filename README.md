@@ -1,0 +1,1 @@
+# CosmicSky Captcha Helper
