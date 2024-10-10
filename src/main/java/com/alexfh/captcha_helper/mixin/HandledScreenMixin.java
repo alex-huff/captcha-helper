@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract
 class HandledScreenMixin
 {
-
+    private static final int numBorders = 2;
 
     @Inject(
-        method = "drawSlot(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/screen/slot/Slot;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;getMatrices()Lnet/minecraft/client/util/math/MatrixStack;"))
+        method = "drawSlot(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/screen/slot/Slot;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;getMatrices()Lnet/minecraft/client/util/math/MatrixStack;", ordinal = 2))
     private
     void drawSlot(DrawContext context, Slot slot, CallbackInfo ci)
     {
@@ -40,7 +40,16 @@ class HandledScreenMixin
             {
                 return;
             }
-            context.drawBorder(slot.x - 1, slot.y - 1, 18, 18, 0xFFCC241D);
+            context.getMatrices().push();
+            // text is drawn with 200z, use 201z to draw on top of text
+            context.getMatrices().translate(0, 0, 200 + 1);
+            for (int i = 0; i < HandledScreenMixin.numBorders; i++)
+            {
+                int offset = 1 + i * 2;
+                int length = 18 + i * 4;
+                context.drawBorder(slot.x - offset, slot.y - offset, length, length, 0xFFCC241D);
+            }
+            context.getMatrices().pop();
         }
     }
 }
