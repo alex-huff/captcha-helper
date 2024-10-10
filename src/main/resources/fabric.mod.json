@@ -1,33 +1,33 @@
 {
-	"schemaVersion": 1,
-	"id": "captcha-helper",
-	"version": "${version}",
-	"name": "Captcha Helper",
-	"description": "Captcha helper for CosmicSky",
-	"authors": [
-		"phonis"
-	],
-	"contact": {
-		"sources": "https://github.com/alex-huff/captcha-helper"
-	},
-	"license": "0BSD",
-	"icon": "assets/captcha-helper/icon.png",
-	"environment": "client",
-	"entrypoints": {
-		"client": [
-			"com.alexfh.captcha_helper.CaptchaHelper"
-		]
-	},
-	"mixins": [
-		{
-			"config": "captcha-helper.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.15.9",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*"
-	}
+  "schemaVersion": 1,
+  "id": "captcha-helper",
+  "version": "${version}",
+  "name": "Captcha Helper",
+  "description": "Captcha helper for CosmicSky",
+  "authors": [
+    "phonis"
+  ],
+  "contact": {
+    "sources": "https://github.com/alex-huff/captcha-helper"
+  },
+  "license": "0BSD",
+  "icon": "assets/captcha-helper/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.alexfh.captcha_helper.CaptchaHelper"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "captcha-helper.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.9",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
 }

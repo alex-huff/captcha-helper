@@ -4,5 +4,5 @@ public
 class CaptchaState
 {
     public static String  currentCaptchaItem;
-    public static int currentCaptchaWindowID;
+    public static Integer currentCaptchaWindowID;
 }
