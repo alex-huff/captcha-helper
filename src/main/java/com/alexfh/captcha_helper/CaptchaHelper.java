@@ -13,6 +13,5 @@ class CaptchaHelper implements ClientModInitializer
     public
     void onInitializeClient()
     {
-        CaptchaHelper.LOGGER.info("Hello Fabric world!");
     }
 }
