@@ -13,7 +13,7 @@ class CaptchaUtil
     CHALLENGE: SPRUCE_BUTTON
      */
     public static final Pattern captchaRegex
-        = Pattern.compile("^(?:\\| )?(?:CAPTCHA|CHALLENGE): (?:\\| Click )?([A-Z_]+)$");
+        = Pattern.compile("^(?:\\| )?(?:CAPTCHA|CHALLENGE): (?:\\| Click )?([A-Z0-9_]+)$");
 
     public static
     Optional<String> extractItemName(String captchaString)
