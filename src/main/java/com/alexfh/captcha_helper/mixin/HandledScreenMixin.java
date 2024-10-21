@@ -23,13 +23,11 @@ import java.util.Locale;
 import java.util.Optional;
 
 @Mixin(HandledScreen.class)
-public abstract
-class HandledScreenMixin
+public abstract class HandledScreenMixin
 {
     @Inject(
         method = "drawSlot(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/screen/slot/Slot;)V", at = @At(value = "HEAD"), cancellable = true)
-    private
-    void drawSlot(DrawContext context, Slot slot, CallbackInfo ci)
+    private void drawSlot(DrawContext context, Slot slot, CallbackInfo ci)
     {
         if (((HandledScreen<?>) (Object) this).getScreenHandler() instanceof GenericContainerScreenHandler genericContainerScreenHandler)
         {
@@ -44,7 +42,7 @@ class HandledScreenMixin
             {
                 return;
             }
-            String  itemType      = Registries.ITEM.getId(slot.getStack().getItem()).getPath();
+            String itemType = Registries.ITEM.getId(slot.getStack().getItem()).getPath();
             boolean isCaptchaItem = itemType.equals(CaptchaState.currentCaptchaItem);
             if (!isCaptchaItem)
             {
@@ -54,8 +52,7 @@ class HandledScreenMixin
     }
 
     @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/screen/ScreenHandler;Lnet/minecraft/entity/player/PlayerInventory;Lnet/minecraft/text/Text;)V")
-    private
-    void init(ScreenHandler handler, PlayerInventory inventory, Text title, CallbackInfo ci)
+    private void init(ScreenHandler handler, PlayerInventory inventory, Text title, CallbackInfo ci)
     {
         if (handler instanceof GenericContainerScreenHandler genericContainerScreenHandler)
         {
@@ -63,22 +60,24 @@ class HandledScreenMixin
             if (itemNameOptional.isEmpty())
             {
                 CaptchaState.currentCaptchaWindowID = null;
-                CaptchaState.currentCaptchaItem     = null;
+                CaptchaState.currentCaptchaItem = null;
                 return;
             }
             String itemName = itemNameOptional.get();
-            CaptchaState.currentCaptchaItem     = itemName.toLowerCase(Locale.ROOT);
+            CaptchaState.currentCaptchaItem = itemName.toLowerCase(Locale.ROOT);
             CaptchaState.currentCaptchaWindowID = genericContainerScreenHandler.syncId;
-            this.scheduleClick();
+            if (CaptchaConfig.autoCaptcha)
+            {
+                this.scheduleClick();
+            }
         }
     }
 
-    private
-    void scheduleClick()
+    private void scheduleClick()
     {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
-        final String    oldCaptchaItem  = CaptchaState.currentCaptchaItem;
-        final int       oldSyncID       = CaptchaState.currentCaptchaWindowID;
+        final String oldCaptchaItem = CaptchaState.currentCaptchaItem;
+        final int oldSyncID = CaptchaState.currentCaptchaWindowID;
         Thread clickThread = new Thread(() ->
         {
             try
@@ -107,8 +106,8 @@ class HandledScreenMixin
                         }
                         for (int i = 0; i < genericContainerScreenHandler.getRows() * 9; i++)
                         {
-                            Slot    slot          = genericContainerScreenHandler.getSlot(i);
-                            String  itemType      = Registries.ITEM.getId(slot.getStack().getItem()).getPath();
+                            Slot slot = genericContainerScreenHandler.getSlot(i);
+                            String itemType = Registries.ITEM.getId(slot.getStack().getItem()).getPath();
                             boolean isCaptchaItem = itemType.equals(oldCaptchaItem);
                             if (isCaptchaItem)
                             {
