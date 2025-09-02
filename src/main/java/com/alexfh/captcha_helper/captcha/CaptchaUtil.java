@@ -7,12 +7,12 @@ import java.util.regex.Pattern;
 public class CaptchaUtil
 {
     /*
-    CAPTCHA: SPRUCE_SAPLING
-    | CAPTCHA: | Click RED_BED
-    CHALLENGE: SPRUCE_BUTTON
+    CAPTCHA: Spruce Sapling
+    | CAPTCHA: | Click Red Bed
+    CHALLENGE: Spruce Button
      */
     public static final Pattern captchaRegex
-        = Pattern.compile("^(?:\\| )?(?:CAPTCHA|CHALLENGE): (?:\\| Click )?([A-Z0-9_]+)$");
+        = Pattern.compile("^(?:\\| *)?(?:CAPTCHA|CHALLENGE): *(?:\\| +Click *)?([A-Za-z0-9 ]+)$");
 
     public static Optional<String> extractItemName(String captchaString)
     {

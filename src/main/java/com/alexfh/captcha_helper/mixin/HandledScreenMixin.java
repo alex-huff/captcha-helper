@@ -64,7 +64,7 @@ public abstract class HandledScreenMixin
                 return;
             }
             String itemName = itemNameOptional.get();
-            CaptchaState.currentCaptchaItem = itemName.toLowerCase(Locale.ROOT);
+            CaptchaState.currentCaptchaItem = itemName.toLowerCase(Locale.ROOT).replace(" ", "_");
             CaptchaState.currentCaptchaWindowID = genericContainerScreenHandler.syncId;
             if (CaptchaConfig.autoCaptcha)
             {
